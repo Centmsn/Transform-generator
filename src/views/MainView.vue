@@ -5,7 +5,7 @@
 
       <base-slider :max="50" label="Translate X"></base-slider>
       <base-slider :max="50" label="Translate Y"></base-slider>
-      <base-slider :max="50" label="Rotate"></base-slider>
+      <base-slider :max="100" label="Rotate"></base-slider>
       <base-slider :max="50" label="Skew X"></base-slider>
       <base-slider :max="50" label="Skew Y"></base-slider>
     </div>

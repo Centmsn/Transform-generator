@@ -22,11 +22,21 @@
         :style="{ left: position + 'px' }"
       >
         <chevron-left-icon
-          :class="['w-8', 'h-8', { 'text-gray-400': minValue }]"
+          @click="handleClick(-1)"
+          :class="[
+            'w-8',
+            'h-8',
+            { 'text-gray-400': minValue, 'hover:text-yellow-400': !minValue },
+          ]"
         ></chevron-left-icon>
         <span class=" text-lg font-semibold">{{ value }}</span>
         <chevron-right-icon
-          :class="['w-8', 'h-8', { 'text-gray-400': maxValue }]"
+          @click="handleClick(1)"
+          :class="[
+            'w-8',
+            'h-8',
+            { 'text-gray-400': maxValue, 'hover:text-yellow-400': !maxValue },
+          ]"
         ></chevron-right-icon>
       </div>
     </div>
@@ -87,6 +97,7 @@ export default {
     },
 
     drag(e) {
+      if (e.type === "click" && e.target !== this.$refs.slider) return;
       const { left, width } = this.$refs.slider.getBoundingClientRect();
       const draggableWidth = 80;
 
@@ -95,8 +106,23 @@ export default {
       if (offsetLeft > width) offsetLeft = width;
 
       this.value =
-        Math.floor(offsetLeft / (width / (this.max - this.min))) + this.min;
+        Math.round(offsetLeft / (width / (this.max - this.min))) + this.min;
       this.position = offsetLeft - draggableWidth / 2;
+    },
+
+    handleClick(value) {
+      if (value === 1) {
+        if (this.value + 1 > this.max) return;
+        this.value = this.value + 1;
+      }
+
+      if (value === -1) {
+        if (this.value - 1 < this.min) return;
+        this.value = this.value - 1;
+      }
+
+      const { width } = this.$refs.slider.getBoundingClientRect();
+      this.position = (width / (this.max - this.min)) * this.value - 40;
     },
   },
 };
