@@ -12,6 +12,7 @@
       @click="drag"
     >
       <div
+        ref="progress"
         class="bg-gradient-to-r from-purple-300 to-purple-500 w-0 h-full rounded-lg"
         :style="{ width: position + 20 + 'px' }"
       ></div>
@@ -47,6 +48,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
 export default {
+  emits: ["sliderChange"],
+
   components: {
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -97,7 +100,11 @@ export default {
     },
 
     drag(e) {
-      if (e.type === "click" && e.target !== this.$refs.slider) return;
+      if (
+        e.type === "click" &&
+        e.target !== this.$refs.slider && e.target !== this.$refs.progress
+      )
+        return;
       const { left, width } = this.$refs.slider.getBoundingClientRect();
       const draggableWidth = 80;
 
@@ -105,8 +112,13 @@ export default {
       if (offsetLeft < 0) offsetLeft = 0;
       if (offsetLeft > width) offsetLeft = width;
 
-      this.value =
+      const newValue =
         Math.round(offsetLeft / (width / (this.max - this.min))) + this.min;
+
+      if (newValue !== this.value) this.$emit("sliderChange", newValue);
+
+      this.value = newValue;
+
       this.position = offsetLeft - draggableWidth / 2;
     },
 

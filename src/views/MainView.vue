@@ -3,8 +3,16 @@
     <div class="border p-2 rounded row-start-1 col-start-1 row-end-6 col-end-4">
       <base-title text="Adjust properties"></base-title>
 
-      <base-slider :max="50" label="Translate X"></base-slider>
-      <base-slider :max="50" label="Translate Y"></base-slider>
+      <base-slider
+        :max="50"
+        label="Translate X"
+        @slider-change="changeX"
+      ></base-slider>
+      <base-slider
+        :max="50"
+        label="Translate Y"
+        @slider-change="changeY"
+      ></base-slider>
       <base-slider :max="100" label="Rotate"></base-slider>
       <base-slider :max="50" label="Skew X"></base-slider>
       <base-slider :max="50" label="Skew Y"></base-slider>
@@ -25,6 +33,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import BaseTitle from "../components/BaseTitle.vue";
 import ThePreview from "../components/ThePreview.vue";
 
@@ -36,6 +45,10 @@ export default {
 
   data() {
     return {};
+  },
+
+  methods: {
+    ...mapActions("transforms", ["changeX", "changeY"]),
   },
 };
 </script>
