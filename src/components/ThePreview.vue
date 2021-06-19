@@ -21,9 +21,11 @@ export default {
     ...mapGetters("transforms", ["translateX", "translateY", "rotate"]),
     transforms() {
       let cssPropety = "";
-      if (this.translateX > 0) cssPropety += `translateX(${this.translateX}px)`;
-      if (this.translateY > 0) cssPropety += `translateY(${this.translateY}px)`;
-      if (this.rotate > 0) cssPropety += `rotate(${this.rotate}deg)`;
+      if (this.translateX !== 0)
+        cssPropety += `translateX(${this.translateX}px)`;
+      if (this.translateY !== 0)
+        cssPropety += `translateY(${this.translateY}px)`;
+      if (this.rotate !== 0) cssPropety += `rotate(${this.rotate}deg)`;
       return cssPropety;
     },
   },

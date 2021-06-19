@@ -69,12 +69,17 @@ export default {
       type: String,
       required: false,
     },
+    initialValue: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
 
   data() {
     return {
       position: -40,
-      value: this.min,
+      value: this.initialValue,
     };
   },
 
@@ -97,6 +102,16 @@ export default {
     endDrag() {
       document.removeEventListener("mousemove", this.drag);
       document.removeEventListener("mouseup", this.endDrag);
+    },
+
+    calcPosition() {
+      const absoluteValue =
+        this.min < 0 && this.value < 0
+          ? Math.abs(this.min) - Math.abs(this.value)
+          : Math.abs(this.value) + Math.abs(this.min);
+
+      const { width } = this.$refs.slider.getBoundingClientRect();
+      this.position = (width / (this.max - this.min)) * absoluteValue - 40;
     },
 
     drag(e) {
@@ -128,14 +143,14 @@ export default {
       if (newValue > this.max || newValue < this.min) return;
       this.value = newValue;
 
-      const absoluteValue =
-        this.min < 0 && this.value < 0
-          ? Math.abs(this.min) - Math.abs(this.value)
-          : Math.abs(this.value) + Math.abs(this.min);
+      this.calcPosition();
 
-      const { width } = this.$refs.slider.getBoundingClientRect();
-      this.position = (width / (this.max - this.min)) * absoluteValue - 40;
+      this.$emit("sliderChange", newValue);
     },
+  },
+
+  mounted() {
+    this.calcPosition();
   },
 };
 </script>
