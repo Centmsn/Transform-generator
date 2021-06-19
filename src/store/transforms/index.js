@@ -4,6 +4,7 @@ export default {
     return {
       translateX: 0,
       translateY: 0,
+      rotate: 0,
     };
   },
   actions: {
@@ -14,6 +15,10 @@ export default {
     changeY(context, value) {
       context.commit("changeY", value);
     },
+
+    changeRotate(context, value) {
+      context.commit("changeRotate", value);
+    },
   },
   getters: {
     translateX(state) {
@@ -23,6 +28,10 @@ export default {
     translateY(state) {
       return state.translateY;
     },
+
+    rotate(state) {
+      return state.rotate;
+    },
   },
   mutations: {
     changeX(state, value) {
@@ -31,6 +40,10 @@ export default {
 
     changeY(state, value) {
       state.translateY = value;
+    },
+
+    changeRotate(state, value) {
+      state.rotate = value;
     },
   },
 };

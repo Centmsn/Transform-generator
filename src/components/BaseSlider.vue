@@ -102,7 +102,8 @@ export default {
     drag(e) {
       if (
         e.type === "click" &&
-        e.target !== this.$refs.slider && e.target !== this.$refs.progress
+        e.target !== this.$refs.slider &&
+        e.target !== this.$refs.progress
       )
         return;
       const { left, width } = this.$refs.slider.getBoundingClientRect();
@@ -122,19 +123,18 @@ export default {
       this.position = offsetLeft - draggableWidth / 2;
     },
 
-    handleClick(value) {
-      if (value === 1) {
-        if (this.value + 1 > this.max) return;
-        this.value = this.value + 1;
-      }
+    handleClick(direction) {
+      const newValue = this.value + direction;
+      if (newValue > this.max || newValue < this.min) return;
+      this.value = newValue;
 
-      if (value === -1) {
-        if (this.value - 1 < this.min) return;
-        this.value = this.value - 1;
-      }
+      const absoluteValue =
+        this.min < 0 && this.value < 0
+          ? Math.abs(this.min) - Math.abs(this.value)
+          : Math.abs(this.value) + Math.abs(this.min);
 
       const { width } = this.$refs.slider.getBoundingClientRect();
-      this.position = (width / (this.max - this.min)) * this.value - 40;
+      this.position = (width / (this.max - this.min)) * absoluteValue - 40;
     },
   },
 };

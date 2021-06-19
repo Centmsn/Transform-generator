@@ -4,16 +4,21 @@
       <base-title text="Adjust properties"></base-title>
 
       <base-slider
-        :max="50"
+        :max="100"
         label="Translate X"
         @slider-change="changeX"
       ></base-slider>
       <base-slider
-        :max="50"
+        :min="-100"
+        :max="100"
         label="Translate Y"
         @slider-change="changeY"
       ></base-slider>
-      <base-slider :max="100" label="Rotate"></base-slider>
+      <base-slider
+        :max="360"
+        label="Rotate (deg)"
+        @slider-change="changeRotate"
+      ></base-slider>
       <base-slider :max="50" label="Skew X"></base-slider>
       <base-slider :max="50" label="Skew Y"></base-slider>
     </div>
@@ -48,7 +53,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("transforms", ["changeX", "changeY"]),
+    ...mapActions("transforms", ["changeX", "changeY", "changeRotate"]),
   },
 };
 </script>

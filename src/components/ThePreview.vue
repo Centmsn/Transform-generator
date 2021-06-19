@@ -7,6 +7,8 @@
         class="w-40 h-40 bg-purple-400"
         :style="{ transform: transforms }"
       ></div>
+
+      <div class="w-40 h-40 border border-gray-300 absolute"></div>
     </div>
   </div>
 </template>
@@ -16,13 +18,12 @@ import { mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters("transforms", ["translateX", "translateY"]),
+    ...mapGetters("transforms", ["translateX", "translateY", "rotate"]),
     transforms() {
       let cssPropety = "";
       if (this.translateX > 0) cssPropety += `translateX(${this.translateX}px)`;
       if (this.translateY > 0) cssPropety += `translateY(${this.translateY}px)`;
-      console.log(this.translateY);
-      console.log(cssPropety);
+      if (this.rotate > 0) cssPropety += `rotate(${this.rotate}deg)`;
       return cssPropety;
     },
   },
