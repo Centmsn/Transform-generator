@@ -8,7 +8,15 @@
         :style="{ transform: transforms }"
       ></div>
 
-      <div class="w-40 h-40 border border-gray-300 absolute"></div>
+      <div class="w-40 h-40 border border-gray-300 absolute">
+        <span class="text-gray-300 absolute -top-6 text-center w-full"
+          >160px</span
+        >
+
+        <span class="text-gray-300 absolute h-full transform -rotate-90 left-8"
+          >160px</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -18,15 +26,20 @@ import { mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters("transforms", ["translateX", "translateY", "rotate"]),
+    ...mapGetters("transforms", [
+      "translateX",
+      "translateY",
+      "rotate",
+      "skewX",
+      "skewY",
+      "translateXCss",
+      "translateYCss",
+      "rotateCss",
+      "skewXCss",
+      "skewYCss",
+    ]),
     transforms() {
-      let cssPropety = "";
-      if (this.translateX !== 0)
-        cssPropety += `translateX(${this.translateX}px)`;
-      if (this.translateY !== 0)
-        cssPropety += `translateY(${this.translateY}px)`;
-      if (this.rotate !== 0) cssPropety += `rotate(${this.rotate}deg)`;
-      return cssPropety;
+      return `${this.translateXCss} ${this.translateYCss} ${this.rotateCss} ${this.skewXCss} ${this.skewYCss}`;
     },
   },
 };

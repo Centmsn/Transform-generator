@@ -1,7 +1,8 @@
 <template>
   <component
     :is="tag"
-    class="w-full text-xl text-gray-600 uppercase border-b-2 my-2 font-semibold text-center"
+    class="w-full text-x uppercase border-b-2 my-2 font-semibold text-center"
+    :class="colorVariant"
     >{{ text }}</component
   >
 </template>
@@ -22,6 +23,18 @@ export default {
     text: {
       type: String,
       required: true,
+    },
+    variant: {
+      type: String,
+      required: false,
+    },
+  },
+
+  computed: {
+    colorVariant() {
+      let titleColor = "text-gray-600";
+      if (this.variant === "light") titleColor = "text-white";
+      return titleColor;
     },
   },
 };
